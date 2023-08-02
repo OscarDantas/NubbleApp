@@ -9,7 +9,7 @@ function App(): JSX.Element {
       <Text preset="headingLarge" style={{color: 'red'}}>
         Coffstack
       </Text>
-      <Text preset="paragraphCaption" style={{color: 'red'}}>
+      <Text preset="headingLarge" style={{fontFamily: 'Satoshi-Bold'}}>
         Coffstack
       </Text>
       <Text preset="paragraphMedium">Coffstack</Text>
