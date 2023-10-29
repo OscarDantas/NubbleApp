@@ -12,19 +12,18 @@ import {
   PostCommentItem,
   PostCommentTextMessage,
 } from './components';
-
 export function PostCommentScreen({
   route,
 }: AppScreenProps<'PostCommentScreen'>) {
   const postId = route.params.postId;
-  const {list, fetchNextPage, hasNextPage} = usePostCommentList(postId);
+  const {list, fetchNextPage, hasNextPage, refresh} =
+    usePostCommentList(postId);
 
   const {bottom} = useAppSafeArea();
 
   function renderItem({item}: ListRenderItemInfo<PostComment>) {
     return <PostCommentItem postComment={item} />;
   }
-
   return (
     <Screen flex={1} title="Comentários" canGoBack>
       <Box flex={1} justifyContent="space-between">
@@ -40,7 +39,7 @@ export function PostCommentScreen({
             />
           }
         />
-        <PostCommentTextMessage postId={postId} />
+        <PostCommentTextMessage postId={postId} onAddComment={refresh} />
       </Box>
     </Screen>
   );
