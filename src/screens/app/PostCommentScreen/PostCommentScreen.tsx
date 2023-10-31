@@ -12,6 +12,7 @@ import {
   PostCommentItem,
   PostCommentTextMessage,
 } from './components';
+
 export function PostCommentScreen({
   route,
 }: AppScreenProps<'PostCommentScreen'>) {
@@ -50,7 +51,7 @@ export function PostCommentScreen({
             />
           }
         />
-        <PostCommentTextMessage postId={postId} onAddComment={refresh} />
+        <PostCommentTextMessage postId={postId} />
       </Box>
     </Screen>
   );
