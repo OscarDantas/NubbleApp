@@ -2,8 +2,4 @@ import axios from 'axios';
 
 export const api = axios.create({
   baseURL: 'http://127.0.0.1:3333/',
-  headers: {
-    Authorization:
-      'Bearer MQ.xJMii2zqUwUJd5iNp1UowxjPChqP_rOfSM6dEAAey9R8nnhjxoJaiTTb2XBo',
-  },
 });
