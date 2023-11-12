@@ -1,10 +1,11 @@
 import React from 'react';
 
-import {useAuthSignUp} from '@domain';
+import {useAuthIsUsernameAvailable, useAuthSignUp} from '@domain';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useForm} from 'react-hook-form';
 
 import {
+  ActivityIndicator,
   Button,
   FormPasswordInput,
   FormTextInput,
@@ -40,25 +41,37 @@ export function SignUpScreen({}: AuthScreenProps<'SignUpScreen'>) {
       reset(resetParam);
     },
   });
-  const {control, formState, handleSubmit} = useForm<SignUpSchema>({
+
+  const {control, formState, handleSubmit, watch} = useForm<SignUpSchema>({
     resolver: zodResolver(signUpSchema),
     defaultValues,
     mode: 'onChange',
   });
+
   function submitForm(formValues: SignUpSchema) {
     signUp(formValues);
   }
+
+  const username = watch('username');
+  const usernameQuery = useAuthIsUsernameAvailable({username});
+
   return (
     <Screen canGoBack scrollable>
       <Text preset="headingLarge" mb="s32">
         Criar uma conta
       </Text>
+
       <FormTextInput
         control={control}
         name="username"
         label="Seu username"
         placeholder="@"
         boxProps={{mb: 's20'}}
+        RightComponent={
+          usernameQuery.isFetching ? (
+            <ActivityIndicator size="small" />
+          ) : undefined
+        }
       />
 
       <FormTextInput
@@ -69,6 +82,7 @@ export function SignUpScreen({}: AuthScreenProps<'SignUpScreen'>) {
         placeholder="Digite seu nome"
         boxProps={{mb: 's20'}}
       />
+
       <FormTextInput
         control={control}
         name="lastName"
@@ -77,6 +91,7 @@ export function SignUpScreen({}: AuthScreenProps<'SignUpScreen'>) {
         placeholder="Digite seu sobrenome"
         boxProps={{mb: 's20'}}
       />
+
       <FormTextInput
         control={control}
         name="email"

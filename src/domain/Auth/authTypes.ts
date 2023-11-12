@@ -1,8 +1,15 @@
 import {User, UserAPI} from '../User';
+
 export interface AuthCredentials {
   token: string;
   user: User;
 }
+
+export interface FieldIsAvailableAPI {
+  message: string;
+  isAvailable: boolean;
+}
+
 export interface AuthCredentialsAPI {
   auth: {
     type: string; //'bearer';
@@ -10,6 +17,7 @@ export interface AuthCredentialsAPI {
   };
   user: UserAPI;
 }
+
 export interface SignInData {
   username?: string;
   email?: string;
@@ -23,6 +31,7 @@ export interface SignUpDataAPI {
   email: string;
   password: string;
 }
+
 export interface SignUpData {
   firstName: string;
   lastName: string;
