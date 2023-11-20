@@ -22,14 +22,17 @@ async function signIn(
   });
   return response.data;
 }
+
 async function signOut(): Promise<string> {
   const response = await api.get<string>('auth/profile/logout');
   return response.data;
 }
+
 async function signUp(data: SignUpDataAPI): Promise<UserAPI> {
   const response = await api.post<UserAPI>('auth/register', data);
   return response.data;
 }
+
 async function isUserNameAvailable(params: {
   username: string;
 }): Promise<FieldIsAvailableAPI> {
@@ -41,6 +44,7 @@ async function isUserNameAvailable(params: {
   );
   return response.data;
 }
+
 async function isEmailAvailable(params: {
   email: string;
 }): Promise<FieldIsAvailableAPI> {
@@ -49,6 +53,7 @@ async function isEmailAvailable(params: {
   });
   return response.data;
 }
+
 async function forgotPassword(
   params: ForgotPasswordParam,
 ): Promise<{message: string}> {
@@ -59,6 +64,10 @@ async function forgotPassword(
   return response.data;
 }
 
+/**
+ * @param axiosConfig [AxiosRequestConfig](https://axios-http.com/docs/req_config) - The Axios request configuration
+ * @returns  Check the config URL property to returns if is a refresh token request
+ */
 async function refreshToken(token: string): Promise<AuthCredentialsAPI> {
   const response = await api.post<AuthCredentialsAPI>(REFRESH_TOKEN_URL, {
     refreshToken: token,
