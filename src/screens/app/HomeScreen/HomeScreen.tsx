@@ -24,10 +24,13 @@ export function HomeScreen({}: AppTabScreenProps<'HomeScreen'>) {
     fetchNextPage,
   } = usePostList();
   const flatListRef = React.useRef<FlatList<Post>>(null);
+
   useScrollToTop(flatListRef);
+
   function renderItem({item}: ListRenderItemInfo<Post>) {
     return <PostItem post={item} />;
   }
+
   return (
     <Screen style={$screen}>
       <FlatList

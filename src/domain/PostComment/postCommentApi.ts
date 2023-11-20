@@ -16,6 +16,7 @@ async function getList(
   });
   return response.data;
 }
+
 async function create(
   post_id: number,
   message: string,
