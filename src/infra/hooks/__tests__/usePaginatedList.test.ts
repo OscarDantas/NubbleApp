@@ -22,9 +22,11 @@ function getList(page: number): Promise<Page<string>> {
   return Promise.resolve({data, meta});
 }
 
+const mockedGetList = jest.fn(getList);
+
 describe('usePaginatedList', () => {
   it('returns all pages together and stops fetching if there are no more page', async () => {
-    const {result} = renderHook(() => usePaginatedList(['key'], getList));
+    const {result} = renderHook(() => usePaginatedList(['key'], mockedGetList));
 
     await waitFor(() => expect(result.current.list).toStrictEqual(page1));
 
@@ -33,5 +35,13 @@ describe('usePaginatedList', () => {
     await waitFor(() =>
       expect(result.current.list).toStrictEqual([...page1, ...page2]),
     );
+
+    result.current.fetchNextPage();
+
+    await waitFor(() =>
+      expect(result.current.list).toStrictEqual([...page1, ...page2]),
+    );
+
+    expect(mockedGetList).toHaveBeenCalledTimes(2);
   });
 });
