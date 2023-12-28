@@ -1,4 +1,6 @@
-module.exports = {
+import type {Config} from 'jest';
+
+const config: Config = {
   preset: 'react-native',
   setupFiles: ['<rootDir>/src/test/jestSetup.ts'],
   setupFilesAfterEnv: ['@testing-library/jest-native/extend-expect'],
@@ -12,3 +14,5 @@ module.exports = {
     'node_modules/(?!((jest-)?react-native|@react-native(-community)?|react-native-safe-area-context)/)',
   ],
 };
+
+export default config;
