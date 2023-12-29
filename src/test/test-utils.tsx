@@ -1,6 +1,7 @@
 import React, {ReactElement} from 'react';
 
 import {NavigationContainer} from '@react-navigation/native';
+import {AuthCredentialsProvider} from '@services';
 import {ThemeProvider} from '@shopify/restyle';
 import {
   QueryClient,
@@ -48,15 +49,24 @@ export const wrapAllProviders = () => {
   );
 };
 
+function customRender<T = unknown>(
+  component: ReactElement<T>,
+  options?: Omit<RenderOptions, 'wrapper'>,
+) {
+  return render(component, {wrapper: wrapAllProviders(), ...options});
+}
+
 export const wrapScreenProviders = () => {
   const queryClient = new QueryClient(queryClientConfig);
 
   return ({children}: {children: React.ReactNode}) => (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
-        <NavigationContainer>{children} </NavigationContainer>
-      </ThemeProvider>
-    </QueryClientProvider>
+    <AuthCredentialsProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={theme}>
+          <NavigationContainer>{children} </NavigationContainer>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </AuthCredentialsProvider>
   );
 };
 
@@ -65,13 +75,6 @@ export function renderScreen<T = unknown>(
   options?: Omit<RenderOptions, 'wrapper'>,
 ) {
   return render(component, {wrapper: wrapScreenProviders(), ...options});
-}
-
-function customRender<T = unknown>(
-  component: ReactElement<T>,
-  options?: Omit<RenderOptions, 'wrapper'>,
-) {
-  return render(component, {wrapper: wrapAllProviders(), ...options});
 }
 
 function customRenderHook<Result, Props>(
